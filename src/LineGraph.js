@@ -23,6 +23,14 @@ ChartJS.register(
 );
 
 const options = {
+  // Legend: {
+  //   display: false,
+  // },
+  // elements: {
+  //   point: {
+  //     radius: 0,
+  //   },
+  // },
   plugins: { legend: { display: false } },
   elements: {
     point: {
@@ -81,12 +89,12 @@ const buildChartData = (data, casesType = "cases") => {
   return chartData;
 };
 
-const LineGraph = ({ casesType }) => {
+const LineGraph = ({ casesType, ...props }) => {
   const [data, setData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=500")
+      await fetch("https://disease.sh/v3/covid-19/historical/all?lastdays=150")
         .then((response) => {
           return response.json();
         })
@@ -100,7 +108,7 @@ const LineGraph = ({ casesType }) => {
   }, [casesType]);
 
   return (
-    <div>
+    <div className={props.className}>
       {data?.length > 0 && (
         <Line
           data={{
